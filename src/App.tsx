@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
+import ControlPanel from "./ControlPanel";
 
 function getRandomInt(max: number) {
     return Math.floor(Math.random() * Math.floor(max));
@@ -36,38 +37,21 @@ function App() {
         }, switchFrequency));
     }, [switchFrequency, leftPercentage]);
 
-    function changeSwitchFrequency(event: React.ChangeEvent<HTMLInputElement>) {
-        setSwitchFrequency(Number(event.target.value));
-    }
-
     return (
         <div className="App">
-            {showControl?
-            <section>
-                <div>
-                <label>Milliseconds each change: </label>
-                <input
-                    value={switchFrequency}
-                    type="number"
-                    onChange={changeSwitchFrequency}
+            {showControl ?
+                <ControlPanel
+                    leftPercentage={leftPercentage}
+                    setLeftPercentage={setLeftPercentage}
+                    setSwitchFrequency={setSwitchFrequency}
+                    switchFrequency={switchFrequency}
                 />
-                </div>
-                <div>
-                    <label>left vs right ratio: </label>
-                    <input
-                        type="range"
-                        min="1"
-                        max="100"
-                        value={leftPercentage.toString()}
-                        onChange={(event) => {
-                            setLeftPercentage(Number(event.target.value));
-                        }}
-                    />
-                </div>
-            </section>: null}
+                : null}
             <section>
                 <label htmlFor="hide-control">Hide control</label>
-                <input id="hide-control" type='checkbox' onChange={() =>{setShowControl(!showControl)}} />
+                <input id="hide-control" type='checkbox' onChange={() => {
+                    setShowControl(!showControl)
+                }}/>
             </section>
             <section id="display-area">
                 <section>
