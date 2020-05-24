@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import ControlPanel from "./ControlPanel";
+import Ball from "./Ball";
 
 function getRandomInt(max: number) {
     return Math.floor(Math.random() * Math.floor(max));
@@ -55,10 +56,10 @@ function App() {
             </section>
             <section id="display-area">
                 <section>
-                    {showLeft ? <span className="circle"/> : null}
+                    {showLeft ? <Ball/> : null}
                 </section>
                 <section>
-                    {showRight ? <span className="circle"/> : null}
+                    {showRight ? <Ball/> : null}
                 </section>
             </section>
         </div>
