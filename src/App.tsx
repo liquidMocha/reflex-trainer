@@ -11,7 +11,7 @@ function App() {
     const [showLeft, setShowLeft] = useState(false);
     const [showRight, setShowRight] = useState(false);
     const [showControl, setShowControl] = useState(true);
-    const [switchFrequency, setSwitchFrequency] = useState(1000);
+    const [switchFrequency, setSwitchFrequency] = useState(2000);
     const [intervalId, setIntervalId] = useState();
     const [leftPercentage, setLeftPercentage] = useState(50);
 
@@ -54,13 +54,8 @@ function App() {
                     setShowControl(!showControl)
                 }}/>
             </section>
-            <section id="display-area">
-                <section>
-                    {showLeft ? <Ball/> : null}
-                </section>
-                <section>
-                    {showRight ? <Ball/> : null}
-                </section>
+            <section id="display-area" className={showLeft? "left":"right"}>
+                {(showLeft||showRight)? <Ball/>:null}
             </section>
         </div>
     );

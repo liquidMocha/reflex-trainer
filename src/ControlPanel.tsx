@@ -26,7 +26,7 @@ function ControlPanel(props: ControlPanelProps) {
             <label>left vs right ratio: </label>
             <input
                 type="range"
-                min="1"
+                min="0"
                 max="100"
                 value={props.leftPercentage.toString()}
                 onChange={(event) => {

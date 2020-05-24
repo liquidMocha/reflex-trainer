@@ -1,9 +1,34 @@
-import "./Ball.css";
 import React from "react";
+import "./Ball.css";
 
 function Ball() {
     return (
-        <span className="circle"/>
+        <div className="scene">
+            <div className="light">
+                <div className="clip">
+                    <div className="container">
+
+                        <div className="circle border"/>
+                        <div className="circle border"/>
+                        <div className="circle border"/>
+                        <div className="circle border"/>
+                        <div className="circle border"/>
+
+                        <div className="circle border"/>
+                        <div className="circle border"/>
+                        <div className="circle border"/>
+                        <div className="circle border"/>
+                        <div className="circle border"/>
+
+                        <div className="circle"/>
+                        <div className="circle"/>
+                        <div className="circle"/>
+                        <div className="circle"/>
+                        <div className="circle"/>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
 

@@ -1,6 +1,13 @@
 #display-area {
   display: flex;
-  justify-content: space-between;
+}
+
+#display-area.left {
+  flex-direction: row;
+}
+
+#display-area.right {
+  flex-direction: row-reverse;
 }
 
 .App {
