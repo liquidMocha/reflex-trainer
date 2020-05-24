@@ -15,7 +15,7 @@ function App() {
 
     function showLeftOrRight() {
         let randomInt = getRandomInt(100);
-        if (randomInt < leftPercentage) {
+        if (randomInt >= leftPercentage) {
             setShowLeft(true);
             setShowRight(false);
         } else {
