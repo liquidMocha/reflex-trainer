@@ -4,6 +4,8 @@ import './App.css';
 function App() {
     const [showLeft, setShowLeft] = useState(false);
     const [showRight, setShowRight] = useState(false);
+    const [switchFrequency, setSwitchFrequency] = useState(1000);
+    const [intervalId, setIntervalId] = useState();
 
     function showLeftOrRight() {
         if (Math.floor(Math.random() * 2 % 2) === 0) {
@@ -17,17 +19,27 @@ function App() {
         setTimeout(() => {
             setShowLeft(false);
             setShowRight(false);
-        }, 700);
+        }, switchFrequency * 0.7);
     }
 
     useEffect(() => {
-        setInterval(() => {
+        clearInterval(intervalId);
+        setIntervalId(setInterval(() => {
             showLeftOrRight();
-        }, 1000);
-    }, []);
+        }, switchFrequency));
+    }, [switchFrequency]);
 
     return (
         <div className="App">
+            <section>
+                <label>Milliseconds before change: </label>
+                <input
+                    type="number"
+                    onChange={(event) => {
+                        setSwitchFrequency(Number(event.target.value));
+                    }}
+                />
+            </section>
             <section id="display-area">
                 <section>
                     {showLeft ? <span className="circle"/> : null}
