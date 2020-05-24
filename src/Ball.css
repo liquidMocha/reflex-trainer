@@ -1,16 +1,4 @@
 /* Rotate Sphere animation */
-@-webkit-keyframes side-spin {
-    0% {
-        transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
-    }
-    50% {
-        transform: rotateY(360deg) rotateX(360deg) rotateZ(0deg);
-    }
-    100% {
-        transform: rotateY(720deg) rotateX(720deg) rotateZ(360deg);
-    }
-}
-
 @keyframes side-spin {
     0% {
         transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
@@ -20,6 +8,30 @@
     }
     100% {
         transform: rotateY(720deg) rotateX(0deg) rotateZ(0deg);
+    }
+}
+
+@keyframes top-spin {
+    0% {
+        transform: rotateY(0deg) rotateX(720deg) rotateZ(0deg);
+    }
+    50% {
+        transform: rotateY(0deg) rotateX(360deg) rotate(0deg);
+    }
+    100% {
+        transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+    }
+}
+
+@keyframes back-spin {
+    0% {
+        transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+    }
+    50% {
+        transform: rotateY(0deg) rotateX(360deg) rotate(0deg);
+    }
+    100% {
+        transform: rotateY(0deg) rotateX(720deg) rotateZ(0deg);
     }
 }
 
@@ -35,10 +47,21 @@
     width: 200px;
     height: 200px;
     transform-style: preserve-3d;
-    animation-name: side-spin;
-    animation-duration: 30s;
+    animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+}
+
+.right-side-spin {
+    animation-name: side-spin;
+}
+
+.top-spin {
+    animation-name: top-spin;
+}
+
+.back-spin {
+    animation-name: back-spin;
 }
 
 .border {

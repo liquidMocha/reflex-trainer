@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import ControlPanel from "./ControlPanel";
 import Ball from "./Ball";
+import {Spin} from "./Spin";
 
 function getRandomInt(max: number) {
     return Math.floor(Math.random() * Math.floor(max));
@@ -14,6 +15,7 @@ function App() {
     const [switchFrequency, setSwitchFrequency] = useState(2000);
     const [intervalId, setIntervalId] = useState();
     const [leftPercentage, setLeftPercentage] = useState(50);
+    const [spinType, setSpinType] = useState(Spin.TOP);
 
     function showLeftOrRight() {
         let randomInt = getRandomInt(100);
@@ -23,6 +25,12 @@ function App() {
         } else {
             setShowLeft(false);
             setShowRight(true);
+        }
+
+        if(getRandomInt(2) === 0) {
+            setSpinType(Spin.TOP);
+        } else {
+            setSpinType(Spin.BACK);
         }
 
         setTimeout(() => {
@@ -54,8 +62,8 @@ function App() {
                     setShowControl(!showControl)
                 }}/>
             </section>
-            <section id="display-area" className={showLeft? "left":"right"}>
-                {(showLeft||showRight)? <Ball/>:null}
+            <section id="display-area" className={showLeft ? "left" : "right"}>
+                {(showLeft || showRight) ? <Ball spin={spinType}/> : null}
             </section>
         </div>
     );
