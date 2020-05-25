@@ -38,45 +38,8 @@
     perspective: 1000px;
 }
 
-.container {
-    margin-top: 5vh;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    width: 200px;
-    height: 200px;
-    transform-style: preserve-3d;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-}
-
 .right-side-spin {
     animation-name: side-spin;
-}
-
-.top-spin__move-left {
-    offset-path: path('M20,20 L -200 500');
-    animation: move 1000ms infinite alternate ease-in-out,
-    top-spin 1200ms infinite linear;
-}
-
-.top-spin__move-right {
-    offset-path: path('M20,20 L 200 500');
-    animation: move 1000ms infinite alternate ease-in-out,
-    top-spin 1200ms infinite linear;
-}
-
-.back-spin__move-left {
-    offset-path: path('M20,20 L -200 500');
-    animation: move 1000ms infinite alternate ease-in-out,
-    back-spin 1200ms infinite linear;
-}
-
-.back-spin__move-right {
-    offset-path: path('M20,20 L 200 500');
-    animation: move 1000ms infinite alternate ease-in-out,
-    back-spin 1200ms infinite linear;
 }
 
 @keyframes move {

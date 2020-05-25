@@ -56,7 +56,9 @@ function App() {
                 }}/>
             </section>
             <section id="display-area">
-                <Ball spin={spinType} moveDirection={goLeft ? MoveDirection.LEFT : MoveDirection.RIGHT}/>
+                <Ball spin={spinType}
+                      moveDirection={goLeft ? MoveDirection.LEFT : MoveDirection.RIGHT}
+                      roundTripTime={switchFrequency}/>
             </section>
         </div>
     );
