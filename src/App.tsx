@@ -3,14 +3,14 @@ import './App.css';
 import ControlPanel from "./ControlPanel";
 import Ball from "./Ball";
 import {Spin} from "./Spin";
+import {MoveDirection} from "./MoveDirection";
 
 function getRandomInt(max: number) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
 function App() {
-    const [showLeft, setShowLeft] = useState(false);
-    const [showRight, setShowRight] = useState(false);
+    const [goLeft, setGoLeft] = useState(false);
     const [showControl, setShowControl] = useState(true);
     const [switchFrequency, setSwitchFrequency] = useState(2000);
     const [intervalId, setIntervalId] = useState();
@@ -20,23 +20,16 @@ function App() {
     function showLeftOrRight() {
         let randomInt = getRandomInt(100);
         if (randomInt >= leftPercentage) {
-            setShowLeft(true);
-            setShowRight(false);
+            setGoLeft(true);
         } else {
-            setShowLeft(false);
-            setShowRight(true);
+            setGoLeft(false);
         }
 
-        if(getRandomInt(2) === 0) {
+        if (getRandomInt(2) === 0) {
             setSpinType(Spin.TOP);
         } else {
             setSpinType(Spin.BACK);
         }
-
-        setTimeout(() => {
-            setShowLeft(false);
-            setShowRight(false);
-        }, switchFrequency * 0.7);
     }
 
     useEffect(() => {
@@ -62,8 +55,8 @@ function App() {
                     setShowControl(!showControl)
                 }}/>
             </section>
-            <section id="display-area" className={showLeft ? "left" : "right"}>
-                {(showLeft || showRight) ? <Ball spin={spinType}/> : null}
+            <section id="display-area">
+                <Ball spin={spinType} moveDirection={goLeft ? MoveDirection.LEFT : MoveDirection.RIGHT}/>
             </section>
         </div>
     );

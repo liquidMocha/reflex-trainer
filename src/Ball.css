@@ -1,4 +1,3 @@
-/* Rotate Sphere animation */
 @keyframes side-spin {
     0% {
         transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
@@ -56,12 +55,37 @@
     animation-name: side-spin;
 }
 
-.top-spin {
-    animation-name: top-spin;
+.top-spin__move-left {
+    offset-path: path('M20,20 L -200 500');
+    animation: move 1000ms infinite alternate ease-in-out,
+    top-spin 1200ms infinite linear;
 }
 
-.back-spin {
-    animation-name: back-spin;
+.top-spin__move-right {
+    offset-path: path('M20,20 L 200 500');
+    animation: move 1000ms infinite alternate ease-in-out,
+    top-spin 1200ms infinite linear;
+}
+
+.back-spin__move-left {
+    offset-path: path('M20,20 L -200 500');
+    animation: move 1000ms infinite alternate ease-in-out,
+    back-spin 1200ms infinite linear;
+}
+
+.back-spin__move-right {
+    offset-path: path('M20,20 L 200 500');
+    animation: move 1000ms infinite alternate ease-in-out,
+    back-spin 1200ms infinite linear;
+}
+
+@keyframes move {
+    0% {
+        offset-distance: 0;
+    }
+    100% {
+        offset-distance: 100%;
+    }
 }
 
 .border {
@@ -138,18 +162,3 @@
 .circle:nth-child(15) {
     transform: rotate3d(0, 1, 0, 90deg) rotate3d(1, 0, 0, 144deg);
 }
-
-/* Light effect */
-.light {
-    margin: auto;
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    box-shadow: 10px 1px 30px white;
-}
-
-/* Clip the sphere a bit */
-.clip {
-    /*clip-path: circle(48%);*/
-}
-
