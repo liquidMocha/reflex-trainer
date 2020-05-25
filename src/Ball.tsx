@@ -11,6 +11,7 @@ interface BallProps {
 }
 
 function Ball({spin, moveDirection, roundTripTime}: BallProps) {
+    const screenHeight = window.screen.height;
     const BallContainer = styled.div`
     margin-left: auto;
     margin-right: auto;
@@ -21,7 +22,7 @@ function Ball({spin, moveDirection, roundTripTime}: BallProps) {
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     
-    offset-path: path('M20,20 L ${moveDirection === MoveDirection.LEFT ? "-200" : "200"} 500');
+    offset-path: path('M20,20 L ${moveDirection === MoveDirection.LEFT ? "-200" : "200"} ${0.8* screenHeight}');
     animation: move ${roundTripTime / 2}ms infinite alternate ease-in-out,
     ${spin === Spin.TOP ? "top-spin" : "back-spin"} 1200ms infinite linear;
 `;
