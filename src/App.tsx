@@ -4,6 +4,9 @@ import ControlPanel from "./ControlPanel";
 import Ball from "./Ball";
 import {Spin} from "./Spin";
 import {MoveDirection} from "./MoveDirection";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faChevronCircleLeft, faChevronCircleRight} from '@fortawesome/free-solid-svg-icons'
+import styled from "styled-components";
 
 function getRandomInt(max: number) {
     return Math.floor(Math.random() * Math.floor(max));
@@ -16,6 +19,7 @@ function App() {
     const [intervalId, setIntervalId] = useState();
     const [leftPercentage, setLeftPercentage] = useState(50);
     const [spinType, setSpinType] = useState(Spin.TOP);
+    const [showEarlyIndicator, setShowEarlyIndicator] = useState(true);
 
     function showLeftOrRight() {
         let randomInt = getRandomInt(100);
@@ -39,6 +43,13 @@ function App() {
         }, switchFrequency));
     }, [switchFrequency, leftPercentage]);
 
+    const IndicatorIcon = styled(FontAwesomeIcon)`
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(0,0,0,1);
+      transform: scale(1);
+      animation: pulse ${switchFrequency}ms infinite;
+    `;
+
     return (
         <div className="App">
             {showControl ?
@@ -47,6 +58,8 @@ function App() {
                     setLeftPercentage={setLeftPercentage}
                     setSwitchFrequency={setSwitchFrequency}
                     switchFrequency={switchFrequency}
+                    showEarlyIndicator={showEarlyIndicator}
+                    setShowEarlyIndicator={setShowEarlyIndicator}
                 />
                 : null}
             <section>
@@ -55,6 +68,16 @@ function App() {
                     setShowControl(!showControl)
                 }}/>
             </section>
+            <section id="display__early-indicator">
+                {
+                    showEarlyIndicator ?
+                        goLeft ?
+                            <IndicatorIcon icon={faChevronCircleLeft}/> :
+                            <IndicatorIcon icon={faChevronCircleRight}/> :
+                        null
+                }
+            </section>
+
             <section id="display-area">
                 <Ball spin={spinType}
                       moveDirection={goLeft ? MoveDirection.LEFT : MoveDirection.RIGHT}

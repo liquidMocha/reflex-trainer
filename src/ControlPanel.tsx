@@ -4,12 +4,27 @@ interface ControlPanelProps {
     switchFrequency: number,
     setSwitchFrequency: Function,
     leftPercentage: number,
-    setLeftPercentage: Function
+    setLeftPercentage: Function,
+    showEarlyIndicator: boolean,
+    setShowEarlyIndicator: Function
 }
 
-function ControlPanel(props: ControlPanelProps) {
+function ControlPanel(
+    {
+        leftPercentage,
+        setLeftPercentage,
+        setSwitchFrequency,
+        switchFrequency,
+        showEarlyIndicator,
+        setShowEarlyIndicator
+    }: ControlPanelProps) {
+
     function changeSwitchFrequency(event: React.ChangeEvent<HTMLInputElement>) {
-        props.setSwitchFrequency(Number(event.target.value));
+        setSwitchFrequency(Number(event.target.value));
+    }
+
+    function toggleEarlyIndicator() {
+        setShowEarlyIndicator(!showEarlyIndicator);
     }
 
     return (
@@ -17,7 +32,7 @@ function ControlPanel(props: ControlPanelProps) {
         <div>
             <label>Milliseconds each change: </label>
             <input
-                value={props.switchFrequency}
+                value={switchFrequency}
                 type="number"
                 onChange={changeSwitchFrequency}
             />
@@ -28,12 +43,21 @@ function ControlPanel(props: ControlPanelProps) {
                 type="range"
                 min="0"
                 max="100"
-                value={props.leftPercentage.toString()}
+                value={leftPercentage.toString()}
                 onChange={(event) => {
-                    props.setLeftPercentage(Number(event.target.value));
+                    setLeftPercentage(Number(event.target.value));
                 }}
             />
         </div>
+            <div>
+                <label htmlFor="control-panel__early-indicator">show early indicator</label>
+                <input
+                    id="control-panel__early-indicator"
+                    type="checkbox"
+                    value={String(showEarlyIndicator)}
+                    onChange={toggleEarlyIndicator}
+                />
+            </div>
     </section>
     );
 }
