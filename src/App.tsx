@@ -8,46 +8,61 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronCircleLeft, faChevronCircleRight} from '@fortawesome/free-solid-svg-icons'
 import styled from "styled-components";
 
+const distributions = require('distributions');
+
 function getRandomInt(max: number) {
     return Math.floor(Math.random() * Math.floor(max));
+}
+
+function getMovingDirection(leftPercentage: number): boolean {
+    let randomInt = getRandomInt(100);
+    return randomInt >= leftPercentage;
+}
+
+function getSpinDirection(): Spin {
+    if (getRandomInt(2) === 0) {
+        return Spin.TOP;
+    } else {
+        return Spin.BACK;
+    }
+}
+
+function getRandomTravelTimeAround(center: number): number {
+    const normal = distributions.Normal(center, center * 0.2);
+    let newTravelTime = normal.inv(Math.random());
+    console.log('new travel time: ', newTravelTime);
+    return newTravelTime;
 }
 
 function App() {
     const [goLeft, setGoLeft] = useState(false);
     const [showControl, setShowControl] = useState(true);
-    const [switchFrequency, setSwitchFrequency] = useState(2000);
-    const [intervalId, setIntervalId] = useState();
+    const [userSetTravelTime, setUserSetTravelTime] = useState(1000);
+    const [actualTravelTime, setActualTravelTime] = useState(userSetTravelTime);
+    const [timeoutId, setTimeoutId] = useState();
     const [leftPercentage, setLeftPercentage] = useState(50);
     const [spinType, setSpinType] = useState(Spin.TOP);
     const [showEarlyIndicator, setShowEarlyIndicator] = useState(true);
 
-    function showLeftOrRight() {
-        let randomInt = getRandomInt(100);
-        if (randomInt >= leftPercentage) {
-            setGoLeft(true);
-        } else {
-            setGoLeft(false);
-        }
-
-        if (getRandomInt(2) === 0) {
-            setSpinType(Spin.TOP);
-        } else {
-            setSpinType(Spin.BACK);
-        }
-    }
-
     useEffect(() => {
-        clearInterval(intervalId);
-        setIntervalId(setInterval(() => {
-            showLeftOrRight();
-        }, switchFrequency));
-    }, [switchFrequency, leftPercentage]);
+        if(timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        const newTravelTime = getRandomTravelTimeAround(userSetTravelTime);
+        const newTimeout = setTimeout(() => {
+            setGoLeft(getMovingDirection(leftPercentage));
+            setSpinType(getSpinDirection());
+            setActualTravelTime(newTravelTime);
+        }, actualTravelTime);
+
+        setTimeoutId(newTimeout);
+    }, [userSetTravelTime, leftPercentage, actualTravelTime]);
 
     const IndicatorIcon = styled(FontAwesomeIcon)`
       border-radius: 50%;
       box-shadow: 0 0 0 0 rgba(0,0,0,1);
       transform: scale(1);
-      animation: pulse ${switchFrequency}ms infinite;
+      animation: pulse ${actualTravelTime}ms infinite;
       font-size: 3rem;
     `;
 
@@ -57,8 +72,8 @@ function App() {
                 <ControlPanel
                     leftPercentage={leftPercentage}
                     setLeftPercentage={setLeftPercentage}
-                    setSwitchFrequency={setSwitchFrequency}
-                    switchFrequency={switchFrequency}
+                    setSwitchFrequency={setUserSetTravelTime}
+                    switchFrequency={userSetTravelTime}
                     showEarlyIndicator={showEarlyIndicator}
                     setShowEarlyIndicator={setShowEarlyIndicator}
                 />
@@ -82,7 +97,7 @@ function App() {
             <section id="display-area">
                 <Ball spin={spinType}
                       moveDirection={goLeft ? MoveDirection.LEFT : MoveDirection.RIGHT}
-                      roundTripTime={switchFrequency}/>
+                      roundTripTime={actualTravelTime}/>
             </section>
         </div>
     );
