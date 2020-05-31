@@ -7,7 +7,7 @@ import {MoveDirection} from "./MoveDirection";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronCircleLeft, faChevronCircleRight} from '@fortawesome/free-solid-svg-icons'
 import styled from "styled-components";
-
+const cephes = require('cephes');
 const distributions = require('distributions');
 
 function getRandomInt(max: number) {
@@ -27,7 +27,9 @@ function getSpinDirection(): Spin {
     }
 }
 
-function getRandomTravelTimeAround(center: number): number {
+async function getRandomTravelTimeAround(center: number): Promise<number> {
+    await cephes.compiled;
+
     const normal = distributions.Normal(center, center * 0.2);
     let newTravelTime = normal.inv(Math.random());
     console.log('new travel time: ', newTravelTime);
@@ -49,10 +51,10 @@ function App() {
             clearTimeout(timeoutId);
         }
         const newTravelTime = getRandomTravelTimeAround(userSetTravelTime);
-        const newTimeout = setTimeout(() => {
+        const newTimeout = setTimeout(async () => {
             setGoLeft(getMovingDirection(leftPercentage));
             setSpinType(getSpinDirection());
-            setActualTravelTime(newTravelTime);
+            setActualTravelTime(await newTravelTime);
         }, actualTravelTime);
 
         setTimeoutId(newTimeout);
